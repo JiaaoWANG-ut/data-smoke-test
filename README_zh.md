@@ -1,95 +1,58 @@
-# 动手教程：如何用脚本绘制 M–M Bond 随时间演化图
+# Data Smoke Test（数据冒烟测试 Demo）
 
-> **仓库用途**  
-> 这是一个**可独立运行的 demo**，专门演示 `plot_MM_bond_time.py` 的用法。  
-> 仓库已包含**原始数值结果**（NPZ / CSV）。不需要 GPU、不需要 OVITO、不需要完整 MD 轨迹，约 **1–3 秒**即可复现论文风格图。
-
----
-
-## 你会完成什么
-
-1. 安装最小 Python 依赖  
-2. 用 `--plot-only` 运行脚本  
-3. 从原始数据重新生成 `MM_bond_time.png` / `.svg` / `.csv`  
-4. 看懂每一列数据含义  
-5. （进阶）了解如何从 `dump.xyz` 重新计算  
-
-**参考图**（仓库已附带；你的运行结果应与此一致）：
-
-![M–M bonding vs time](MM_bond_time.png)
-
-英文完整版说明见 [`README.md`](README.md)。
+> **这个仓库是什么**  
+> 面向全文分析流程的 **data smoke test**：验证随仓库提供的数值结果能否正确加载、
+> 脚本能否跑通、能否在普通电脑上生成预期图件——**不需要** GPU、OVITO 或完整 MD 轨迹。
+>
+> **这个 case 是什么**  
+> 这里放的是**其中一个代表 case**（金属–金属 / M–M bond 随时间演化）。  
+> 完整 Methods 包里还有 entropy、contact ratio、bond angle、coordination 等；
+> 冒烟测试的模式相同：小数据产品 + 一条命令 + 预期输出。
 
 ---
 
-## 仓库里有什么
+## 冒烟测试目标（通过标准）
 
-| 文件 / 目录 | 说明 |
-|-------------|------|
-| `plot_MM_bond_time.py` | 主脚本：读数据 / 作图（也可从轨迹重算） |
-| `MM_bond_time_data.npz` | **原始结果**（6 个温度 × 400 帧） |
-| `MM_bond_time_data.csv` | 同上，表格格式，方便 Excel / pandas |
-| `MM_bond_time.png` / `.svg` | 参考图 |
-| `MM_bond_time_methods.md` | 方法细节（中文） |
-| `example_gpumd_run/` | 示例 GPUMD 输入、`thermo.out` 等 |
-| `requirements.txt` | 依赖列表 |
+| 检查项 | 通过标准 |
+|--------|----------|
+| 依赖安装 | `pip install -r requirements.txt` 成功 |
+| 脚本运行 | `python plot_MM_bond_time.py --plot-only` 退出码 0 |
+| 产出文件 | 写出 `MM_bond_time.png` / `.svg` / `.csv` |
+| 耗时 | 普通桌面约 **1–3 秒** |
+| 结果合理性 | 图中有 6 条温度曲线；高温曲线明显上升 |
 
-> 完整 `dump.xyz` 轨迹体积很大，**本 demo 不附带**。画图所需统计量已在 NPZ/CSV 中。
+满足以上即可认为：**该 case 的数据产品 + 作图链路**正常。
 
 ---
 
-## 环境要求
+## 本仓库中的 Case（示例）
 
-- Python **3.10+**（已在 3.13 测试）
-- Windows / macOS / Linux 均可
-- **不需要** GPU
-- 内存 4 GB 以上即可
+- **Case：** M–M bond 时间序列  
+- **脚本：** `plot_MM_bond_time.py`  
+- **原始数据：** `MM_bond_time_data.npz` / `MM_bond_time_data.csv`  
+- **参考图：**
 
-依赖：
+![Data smoke test — example case](MM_bond_time.png)
 
-```text
-numpy>=1.22
-matplotlib>=3.5
-```
+英文版：[`README.md`](README.md)。方法细节：[`MM_bond_time_methods.md`](MM_bond_time_methods.md)。
 
 ---
 
-## 三步跑通 Demo
-
-### 1. 克隆仓库
+## 如何运行
 
 ```bash
-git clone https://github.com/JiaaoWANG-ut/mm-bond-hands-on-tutorial.git
-cd mm-bond-hands-on-tutorial
-```
+git clone https://github.com/JiaaoWANG-ut/data-smoke-test.git
+cd data-smoke-test
 
-### 2. 安装依赖
-
-**Windows PowerShell：**
-
-```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+# Windows: .\.venv\Scripts\Activate.ps1
+# Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt
-```
 
-**Linux / macOS：**
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-安装通常 **1–3 分钟**。
-
-### 3. 运行并出图
-
-```bash
 python plot_MM_bond_time.py --plot-only
 ```
 
-成功时终端会打印：
+预期终端输出：
 
 ```text
 Saved: .../MM_bond_time_data.csv
@@ -97,63 +60,63 @@ Saved: .../MM_bond_time.png
 Saved: .../MM_bond_time.svg
 ```
 
-打开 `MM_bond_time.png`，应看到 6 条温度曲线（1500–3000 K）、对数时间轴、误差阴影带。运行时间约 **1–3 秒**。
+安装通常 **1–3 分钟**；冒烟运行通常 **1–3 秒**。
 
 ---
 
-## 命令说明
+## 仓库内容
 
-```bash
-python plot_MM_bond_time.py --plot-only   # 推荐：只用仓库里的 NPZ 出图
-python plot_MM_bond_time.py              # 有 NPZ 就读缓存；否则尝试算轨迹
-python plot_MM_bond_time.py --force      # 强制从 dump.xyz 重算（需 OVITO + 轨迹）
-```
-
----
-
-## 原始数据怎么读
-
-### CSV 列含义
-
-| 列名 | 含义 |
+| 路径 | 说明 |
 |------|------|
-| `temperature_K` | 温度 (K) |
+| `plot_MM_bond_time.py` | 本 case 脚本（从缓存出图） |
+| `MM_bond_time_data.npz` / `.csv` | ★ 本 case 原始数值产品 |
+| `MM_bond_time.png` / `.svg` | 参考输出 |
+| `example_gpumd_run/` | 示例 GPUMD 输入 / thermo |
+| `requirements.txt` | 最小依赖 |
+
+> 完整 `dump.xyz` 不在本仓库。冒烟测试只依赖已缓存的 NPZ/CSV。
+
+---
+
+## 数据列说明（本 case）
+
+| 列 | 含义 |
+|----|------|
+| `temperature_K` | 温度 |
 | `time_ps` | 时间 (ps) |
 | `frame_index` | 原轨迹帧号 |
-| `n_pure` | 满足 M–M bond 判据的金属原子数 |
-| `n_err` | 不确定度 \(\sqrt{n\_pure}\) |
-
-### 用 Python 查看 NPZ
+| `n_pure` | 本 case 指标（M–M bond 原子数） |
+| `n_err` | \(\sqrt{n\_pure}\) |
 
 ```python
 import numpy as np
 d = np.load("MM_bond_time_data.npz", allow_pickle=True)
-print(d["temperatures"])
-print(d["3000_times_ps"][:5], d["3000_n_pure"][:5])
+print(d["temperatures"], d["3000_n_pure"].max())
 ```
 
 ---
 
-## 物理判据（脚本在算什么）
+## 命令
 
-对每个金属原子 \(M \in \{\mathrm{Fe},\mathrm{Co},\mathrm{Ni}\}\)：
+| 命令 | 是否属于 smoke test |
+|------|---------------------|
+| `python plot_MM_bond_time.py --plot-only` | **是（推荐）** |
+| `python plot_MM_bond_time.py --force` | 否（从 dump 重算，需 OVITO + 轨迹） |
 
-- O 近邻：\(r < 2.5\) Å → \(\mathrm{CN_O}\)
-- 金属近邻：\(r < 3.0\) Å → \(\mathrm{CN_{metal}}\)
+---
 
-计入 M–M bond 的条件：
+## 与完整代码包的关系
 
 ```text
-CN_O = 0  且  CN_metal > 0
+Methods/
+  entropy/               ← 其他 case
+  contact ratio/         ← 其他 case
+  bond angle analysis/   ← 其他 case
+  coordination number/   ← 其他 case
+  M-M bonds/             ← 本仓库隔离出的 smoke-test case
 ```
 
-即第一壳层**没有氧**，但仍有金属邻居。详见 [`MM_bond_time_methods.md`](MM_bond_time_methods.md)。
-
-**结果 sanity check：**
-
-- 1500–2000 K：计数接近 0  
-- 2500 K：后期上升  
-- 3000 K：更早、更强上升（可达 ~2000+）
+后续可为其他 case 按同样方式增加冒烟测试：小数据 + 一键命令 + 预期文件/耗时。
 
 ---
 
@@ -161,37 +124,6 @@ CN_O = 0  且  CN_metal > 0
 
 | 现象 | 处理 |
 |------|------|
-| 缺 `numpy` / `matplotlib` | 激活虚拟环境后 `pip install -r requirements.txt` |
-| `--plot-only` 报缺 NPZ | 从 git 恢复 `MM_bond_time_data.npz` |
-| `--force` 报缺 `ovito` | 安装 OVITO，或继续用 `--plot-only` |
-| 报找不到 dump | 本仓库无完整轨迹，请用 `--plot-only` |
-| PowerShell 无法 Activate | 执行一次 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |
-
----
-
-## 进阶：从轨迹重算
-
-1. `pip install ovito`  
-2. 按下面布局放置轨迹：
-
-```text
-1500K/gpumd/dump.xyz.gz
-...
-3000K/gpumd/dump.xyz
-```
-
-3. `python plot_MM_bond_time.py --force`
-
-示例输入见 `example_gpumd_run/`（使用前请修改 `run.in` 里的 `potential` 路径）。
-
----
-
-## 与完整代码包的关系
-
-完整 Methods 代码中，对应目录为：
-
-```text
-Methods/M-M bonds/
-```
-
-本仓库把它拆成**独立教学 / software demo**：最小依赖 + 原始数值数据 + 一条命令出图。
+| 缺依赖 | `pip install -r requirements.txt` |
+| 缺 NPZ | 从 git 恢复 `MM_bond_time_data.npz` |
+| 报缺 ovito / dump | 继续用 `--plot-only`（这才是 smoke test） |

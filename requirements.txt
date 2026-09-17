@@ -1,9 +1,6 @@
-# Minimal dependencies for the M–M bond hands-on demo
+# Minimal dependencies for the data smoke test (this case)
 numpy>=1.22
 matplotlib>=3.5
 
-# Optional extras (not required for --plot-only)
-# scipy>=1.7
-# Pillow>=9.0
-# openpyxl>=3.0
-# ovito   # only needed to recompute from dump.xyz
+# Optional (not required for the smoke test / --plot-only)
+# ovito   # only if recomputing this case from dump.xyz
