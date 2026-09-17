@@ -11,6 +11,15 @@
 > time). The same smoke-test pattern applies to other analyses in the full
 > methods package (entropy, contact ratio, bond angles, coordination, …).
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22816324.svg)](https://doi.org/10.5281/zenodo.22816324)
+
+**Full original scripts & data (all analysis cases):**  
+DOI [`10.5281/zenodo.22816324`](https://doi.org/10.5281/zenodo.22816324) ·  
+Record: [https://zenodo.org/records/22816324](https://zenodo.org/records/22816324)
+
+This GitHub repo is only a **data smoke-test slice**. The complete Methods package
+lives on Zenodo at the link above.
+
 ---
 
 ## Smoke-test goal
@@ -125,15 +134,23 @@ Saved: .../MM_bond_time.svg
 
 ## Shipped data (this case)
 
-### CSV columns
+### CSV columns (`MM_bond_time_data.csv`)
 
-| Column | Description |
-|--------|-------------|
-| `temperature_K` | 1500, 1600, 1800, 2000, 2500, 3000 |
-| `time_ps` | Sampled time (ps) |
-| `frame_index` | Index in the original trajectory |
-| `n_pure` | Count for this case’s metric (M–M bond atoms) |
-| `n_err` | Poisson error \(\sqrt{n_\mathrm{pure}}\) |
+| Column | Type | Description |
+|--------|------|-------------|
+| `temperature_K` | int | Simulation temperature (1500, 1600, 1800, 2000, 2500, 3000) |
+| `time_ps` | float | Frame time in picoseconds |
+| `frame_index` | int | Index in the original 2500-frame trajectory |
+| `n_pure` | int | Number of metal atoms counted as M–M bonded |
+| `n_err` | float | Uncertainty σ = √n_pure (Poisson) |
+
+Example (first rows are near-zero at 1500 K):
+
+```csv
+temperature_K,time_ps,frame_index,n_pure,n_err
+1500,2.000000,0,0,0.000000
+1500,14.000000,6,0,0.000000
+```
 
 ### Quick inspect
 
@@ -148,13 +165,21 @@ print("3000 K n_pure max:", d["3000_n_pure"].max())
 
 ## Case science (brief)
 
-For metal atoms \(M \in \{\mathrm{Fe},\mathrm{Co},\mathrm{Ni}\}\):
+For metal atoms M in {Fe, Co, Ni}:
 
-- \(\mathrm{CN_O}\): O neighbours with \(r < 2.5\) Å  
-- \(\mathrm{CN_{metal}}\): Fe/Co/Ni neighbours with \(r < 3.0\) Å  
+- `CN_O`: O neighbours with r &lt; 2.5 Å  
+- `CN_metal`: Fe/Co/Ni neighbours with r &lt; 3.0 Å  
 
 Counted when `CN_O = 0` and `CN_metal > 0`.  
 Full notes: [`MM_bond_time_methods.md`](MM_bond_time_methods.md).
+
+### Expected trend (sanity check for this case)
+
+| T (K) | Typical `n_pure` behaviour |
+|------:|----------------------------|
+| 1500–2000 | Near zero for most/all frames (oxide-dominated local shells) |
+| 2500 | Rises at later times (order 10²–10³) |
+| 3000 | Strong rise earlier; can reach ~2000+ by the end |
 
 ---
 
@@ -179,8 +204,13 @@ Full notes: [`MM_bond_time_methods.md`](MM_bond_time_methods.md).
 
 ## Relation to the full methods package
 
+Full original scripts (all cases) are archived on Zenodo:
+
+- **DOI:** [10.5281/zenodo.22816324](https://doi.org/10.5281/zenodo.22816324)
+- **Record:** [https://zenodo.org/records/22816324](https://zenodo.org/records/22816324)
+
 ```text
-Full deposit → Methods/
+Zenodo deposit → Methods/
   entropy/              ← other cases
   contact ratio/        ← other cases
   bond angle analysis/  ← other cases
@@ -196,5 +226,8 @@ one command + expected outputs / runtime.
 
 ## Citation
 
-Cite the associated manuscript and archival code deposit (e.g. Zenodo) when
-using these materials.
+If you use this smoke test or the full analysis code, please cite:
+
+- Zenodo archive (full scripts): [10.5281/zenodo.22816324](https://doi.org/10.5281/zenodo.22816324)  
+  ([https://zenodo.org/records/22816324](https://zenodo.org/records/22816324))
+- The associated manuscript

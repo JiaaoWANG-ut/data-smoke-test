@@ -9,6 +9,14 @@
 > 完整 Methods 包里还有 entropy、contact ratio、bond angle、coordination 等；
 > 冒烟测试的模式相同：小数据产品 + 一条命令 + 预期输出。
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22816324.svg)](https://doi.org/10.5281/zenodo.22816324)
+
+**完整原始脚本与数据（全部分析 case）：**  
+DOI [`10.5281/zenodo.22816324`](https://doi.org/10.5281/zenodo.22816324) ·  
+页面：[https://zenodo.org/records/22816324](https://zenodo.org/records/22816324)
+
+本 GitHub 仓库只是 **data smoke test** 切片；全部 Methods 脚本在上述 Zenodo 记录中。
+
 ---
 
 ## 冒烟测试目标（通过标准）
@@ -80,19 +88,35 @@ Saved: .../MM_bond_time.svg
 
 ## 数据列说明（本 case）
 
-| 列 | 含义 |
-|----|------|
-| `temperature_K` | 温度 |
-| `time_ps` | 时间 (ps) |
-| `frame_index` | 原轨迹帧号 |
-| `n_pure` | 本 case 指标（M–M bond 原子数） |
-| `n_err` | \(\sqrt{n\_pure}\) |
+| 列 | 类型 | 含义 |
+|----|------|------|
+| `temperature_K` | int | 模拟温度 (1500, 1600, 1800, 2000, 2500, 3000) |
+| `time_ps` | float | 帧时间 (ps) |
+| `frame_index` | int | 原 2500 帧轨迹中的帧号 |
+| `n_pure` | int | 计入 M–M bond 的金属原子数 |
+| `n_err` | float | 不确定度 σ = √n_pure（Poisson） |
+
+示例（1500 K 前几行接近 0）：
+
+```csv
+temperature_K,time_ps,frame_index,n_pure,n_err
+1500,2.000000,0,0,0.000000
+1500,14.000000,6,0,0.000000
+```
 
 ```python
 import numpy as np
 d = np.load("MM_bond_time_data.npz", allow_pickle=True)
 print(d["temperatures"], d["3000_n_pure"].max())
 ```
+
+### 本 case 结果 sanity check
+
+| T (K) | 典型 `n_pure` 行为 |
+|------:|-------------------|
+| 1500–2000 | 多数/全部帧接近 0（氧化物局域壳层为主） |
+| 2500 | 后期上升（量级约 10²–10³） |
+| 3000 | 更早、更强上升；末期可达 ~2000+ |
 
 ---
 
@@ -107,8 +131,13 @@ print(d["temperatures"], d["3000_n_pure"].max())
 
 ## 与完整代码包的关系
 
+完整原始脚本（全部 case）归档于 Zenodo：
+
+- **DOI：** [10.5281/zenodo.22816324](https://doi.org/10.5281/zenodo.22816324)
+- **页面：** [https://zenodo.org/records/22816324](https://zenodo.org/records/22816324)
+
 ```text
-Methods/
+Zenodo → Methods/
   entropy/               ← 其他 case
   contact ratio/         ← 其他 case
   bond angle analysis/   ← 其他 case
@@ -117,6 +146,14 @@ Methods/
 ```
 
 后续可为其他 case 按同样方式增加冒烟测试：小数据 + 一键命令 + 预期文件/耗时。
+
+---
+
+## 引用
+
+- 完整脚本 Zenodo：[10.5281/zenodo.22816324](https://doi.org/10.5281/zenodo.22816324)  
+  ([https://zenodo.org/records/22816324](https://zenodo.org/records/22816324))
+- 以及相关论文
 
 ---
 
