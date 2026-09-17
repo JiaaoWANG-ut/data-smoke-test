@@ -1,0 +1,9 @@
+# Minimal dependencies for the M–M bond hands-on demo
+numpy>=1.22
+matplotlib>=3.5
+
+# Optional extras (not required for --plot-only)
+# scipy>=1.7
+# Pillow>=9.0
+# openpyxl>=3.0
+# ovito   # only needed to recompute from dump.xyz

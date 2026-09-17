@@ -1,0 +1,17 @@
+potential     ../../../../../Sync/gpumd/nep89.txt
+
+# === Stage A: 结构优化（FIRE 算法，含盒子松弛）===
+
+minimize fire 1.0e-3 3000 1 1
+ensemble      nve
+time_step     0
+dump_xyz      -1 0 1 relaxed.xyz
+run           1
+
+# === Stage B: 动力学预热/生产 ===
+velocity      3000.0
+ensemble      nvt_lan 3000.0 3000.0 100
+time_step     1
+dump_thermo   50
+dump_exyz     2000
+run           5000000
