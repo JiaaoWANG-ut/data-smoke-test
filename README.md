@@ -12,6 +12,7 @@
 > methods package (entropy, contact ratio, bond angles, coordination, …).
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22816324.svg)](https://doi.org/10.5281/zenodo.22816324)
+[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 **Full original scripts & data (all analysis cases):**  
 DOI [`10.5281/zenodo.22816324`](https://doi.org/10.5281/zenodo.22816324) ·  
@@ -19,6 +20,9 @@ Record: [https://zenodo.org/records/22816324](https://zenodo.org/records/2281632
 
 This GitHub repo is only a **data smoke-test slice**. The complete Methods package
 lives on Zenodo at the link above.
+
+**License:** [CC BY-NC 4.0](LICENSE) — free for non-commercial use with attribution;
+**commercial use is not permitted.**
 
 ---
 
@@ -231,3 +235,14 @@ If you use this smoke test or the full analysis code, please cite:
 - Zenodo archive (full scripts): [10.5281/zenodo.22816324](https://doi.org/10.5281/zenodo.22816324)  
   ([https://zenodo.org/records/22816324](https://zenodo.org/records/22816324))
 - The associated manuscript
+
+---
+
+## License
+
+This repository is licensed under
+**[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](LICENSE)**.
+
+- You may share and adapt the materials for **non-commercial** purposes with attribution.
+- **Commercial use is prohibited.**
+- Full terms: [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/)

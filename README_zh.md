@@ -10,12 +10,15 @@
 > 冒烟测试的模式相同：小数据产品 + 一条命令 + 预期输出。
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22816324.svg)](https://doi.org/10.5281/zenodo.22816324)
+[![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 **完整原始脚本与数据（全部分析 case）：**  
 DOI [`10.5281/zenodo.22816324`](https://doi.org/10.5281/zenodo.22816324) ·  
 页面：[https://zenodo.org/records/22816324](https://zenodo.org/records/22816324)
 
 本 GitHub 仓库只是 **data smoke test** 切片；全部 Methods 脚本在上述 Zenodo 记录中。
+
+**许可：** [CC BY-NC 4.0](LICENSE) — 允许非商业使用（需署名）；**禁止商业用途。**
 
 ---
 
@@ -154,6 +157,17 @@ Zenodo → Methods/
 - 完整脚本 Zenodo：[10.5281/zenodo.22816324](https://doi.org/10.5281/zenodo.22816324)  
   ([https://zenodo.org/records/22816324](https://zenodo.org/records/22816324))
 - 以及相关论文
+
+---
+
+## 许可（License）
+
+本仓库采用
+**[知识共享 署名–非商业性使用 4.0 国际 (CC BY-NC 4.0)](LICENSE)**。
+
+- 可在**非商业**前提下分享、改编，并注明出处。
+- **禁止商业用途。**
+- 完整条款：[https://creativecommons.org/licenses/by-nc/4.0/deed.zh](https://creativecommons.org/licenses/by-nc/4.0/deed.zh)
 
 ---
 
